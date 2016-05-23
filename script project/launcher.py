@@ -6,49 +6,49 @@ from internetbook import *
 def printMenu():
     print("\nWelcome! Book booManager Program (xml version)")
     print("========Menu==========")
-    print("Load xml:  l")
-    print("Print dom to xml: p")
-    print("Quit program:   q")
-    print("print Book list: b")
-    print("Add new book: a")
-    print("sEarch Book Title: e")
-    print("Make html: m")
+    print("Load xml:  1")
+    print("Print dom to xml: 2")
+    print("Quit program:   3")
+    print("print Accident list: 4")
+    print("Add new Accident: 5")
+    print("Search Accident Title: 6")
+    print("Make html: 7")
     print("----------------------------------------")
-    print("Get book data from isbn: g")
-    print("send maIl : i")
-    print("sTart Web Service: t")
+    print("Get Accident data from isbn: 8")
+    print("Send mail : 9")
+    print("Start Web Service: 0")
     print("========Menu==========")
     
 def launcherFunction(menu):
-    if menu ==  'l':
+    if menu ==  '1':
         LoadXMLFromFile()
-    elif menu == 'q':
+    elif menu == '3':
         QuitBookMgr()
-    elif menu == 'p':
+    elif menu == '2':
         PrintDOMtoXML()
-    elif menu == 'b':
+    elif menu == '4':
         PrintBookList(["title",])
-    elif menu == 'a':
+    elif menu == '5':
         ISBN = str(input ('insert ISBN :'))
         title = str(input ('insert Title :'))
         AddBook({'ISBN':ISBN, 'title':title})
-    elif menu == 'e':
+    elif menu == '6':
         keyword = str(input ('input keyword to search :'))
         printBookList(SearchBookTitle(keyword))
-    elif menu == 'g': 
+    elif menu == '8': 
         isbn = str(input ('input isbn to get :'))
         #isbn = '0596513984'
         ret = getBookDataFromISBN(isbn)
         AddBook(ret)
-    elif menu == 'm':
+    elif menu == '7':
         keyword = str(input ('input keyword code to the html  :'))
         html = MakeHtmlDoc(SearchBookTitle(keyword))
         print("-----------------------")
         print(html)
         print("-----------------------")
-    elif menu == 'i':
+    elif menu == '9':
         sendMain()
-    elif menu == "t":
+    elif menu == "0":
         startWebService()
     else:
         print ("error : unknow menu key")
