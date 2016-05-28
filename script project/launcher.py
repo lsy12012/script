@@ -44,19 +44,9 @@ def SelectNation():
     if not checkDocument():
         return None
     
- #   response = AccidentDoc.childNodes
- #   rsp_child = response[0].childNodes
-    
- #   for item in rsp_child:
- #       if item.nodeName == "body":
- #           body_list = item.childNodes
- #           items = body_list[0]
- #           items_list = items.childNodes
- #           for i, item in enumerate(items_list):
- #               item_list = item.childNodes
- #               print("{0}. {1}".format(i, item_list[1].firstChild.nodeValue))
-                
-   
+    f = open("C:/script/script project/ISO 국가코드.txt", "r")
+    print(f.read())
+#    f.close()            
     IsoCode = str(input("ISO 국가코드를 입력하시오: "))
     print(IsoCode, "를 선택")
     return IsoCode
