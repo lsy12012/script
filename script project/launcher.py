@@ -1,68 +1,143 @@
+# -*- coding: cp949 -*-
 loopFlag = 1
-from xmlAccident import*
+from xml.dom.minidom import parse, parseString
+from xml.etree import ElementTree
+from urllib.request import urlopen
+from internetAccident import *
 
-####ë©”ë‰´
+AccidentDoc = None
+informofLostsXMLDoc = None
+server = "apis.data.go.kr"
+regKey = 'BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D'
+
 def printMenu():
-    print("\nWelcome! Accident Manager Program(xml version)")
-    print("========Menu========")
-    print("Load xml:  1")
-    print("Print dom to xml: 2")
-    print("Quit program:   3")
-    print("print Accident list: 4")
-    print("Add new Accident: 5")
-    print("Search Accident name: 6")
-    print("Make html: 7")
-    print("----------------------------------------")
-    print("Get book data from Item: 8")
-    print("send mail : 9")
-    print("Start Web Service: 0")
-    print("========Menu==========")
+    print("\n Welcome!")
+    print("===Menu===")
+    print("Load XML: l")
+    print("´ë·úº° °Ë»ö: c")
+    print("³ª¶óº° °Ë»ö: n")
+    print("Quit program: q")
     
+
 def launcherFunction(menu):
-    if menu == '1':
+    if menu == 'l':
         LoadXMLFromFile()
-    elif menu == '2':
-        PrintDOMtoXML()
-    elif menu == '3':
+    elif menu == 'c':
+        keyword = str(input('input keyword to search: '))
+        printAccident(SearchAccidentContinent(keyword))
+    elif menu == 'n':
+        if AccidentDoc == None:
+            print("Error : Document is empty")
+            return False
+        else:
+            IsoCode = SelectNation()
+            PrintNation(IsoCode)
+                 
+    elif menu == 'q':
         QuitAccidentMgr()
-    elif menu == '4':
-        PrintAccidentList(["name", ])
-    elif menu == '5':
-        continent = str(input('insert continent : '))
-        name = str(input('insert name : '))
-        AddAccident({'continent':continent, 'name':name})
-    elif menu == '6':
-        keyword = str(input('input keyword to search : '))
-        printAccidentList(SearchAccidentTitle(keyword))
-    elif menu == '7':
-        keyword = str(input('input keyword code to the html : '))
-        html = MakeHtmpDoc(SearchAccidentTitle(keyword))
-        print("-----------------")
-        print(html)
-        print("-----------------")
-    elif menu == '8':
-        continent = str(input('input continent to get : '))
-        ret = getAccidentDataFromCONTINENT(continent)
-        AddAccident(ret)
-    elif menu == '9':
-        sendMain()
-    elif menu == '0':
-        startWebService()
+        
     else:
         print("error : unknown menu key")
+      
+def SelectNation():
+    global AccidentDoc
+    if not checkDocument():
+        return None
+    
+    response = AccidentDoc.childNodes
+    rsp_child = response[0].childNodes
+    
+    for item in rsp_child:
+        if item.nodeName == "body":
+            body_list = item.childNodes
+            items = body_list[0]
+            items_list = items.childNodes
+            for i, item in enumerate(items_list):
+                item_list = item.childNodes
+                print("{0}. {1}".format(i, item_list[1].firstChild.nodeValue))
+                
+   
+    IsoCode = str(input("ISO ±¹°¡ÄÚµå¸¦ ÀÔ·ÂÇÏ½Ã¿À: "))
+    print(IsoCode, "¸¦ ¼±ÅÃ")
+    return IsoCode
+
         
+def PrintNation(IsoCode):
+    global regKey
+    global informofLostsXMLDoc
+    losts_inform_dic = \
+    {
+        "continent" : "´ë·ú: ", "ename" : "nation: ", "id" : "id: ",
+        "imgUrl" : "imgUrl1: ", "imgUrl2" : "imgUrl2: ", "name" : "±¹°¡: ",
+        "news" : "¼Ò½Ä: ", "wrtDt" : "ÀÛ¼º ³¯Â¥: "
+    }
+    URL = "http://" + server + "/1262000/AccidentService/getAccidentList?serviceKey=" + regKey + "&isoCode1=" + IsoCode
+   # URL = "http://apis.data.go.kr/1262000/AccidentService/getAccidentList?serviceKey=BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D&numOfRows=999&pageSize=999&pageNo=1&startPage=1"
+   # print(IsoCode)
+   # print(URL)
+    try:
+        xmlFD = urlopen(URL)
+    except IOError:
+        print("loading fail!!!")
+    else:
+        try:
+            informofLostsXMLDoc = parse(xmlFD)
+        except Exception:
+            print("Error: Document is empty")
+        else:
+            print("°Ë»ö Á¶°Ç¿¡ ÇØ´çÇÏ´Â Á¤º¸µéÀ» Ãâ·ÂÇÕ´Ï´Ù.")
+            response = informofLostsXMLDoc.childNodes
+            rsp_child = response[0].childNodes
+            for item in rsp_child:
+                if item.nodeName == "body":
+                    body_list = item.childNodes
+                    items = body_list[0]
+                    items_list = items.childNodes
+                    for i, item in enumerate(items_list):
+                        item_list = item.childNodes
+                        for losts_inform in item_list:
+                            if losts_inform.nodeName != "rnum":
+                                print(losts_inform_dic[losts_inform.nodeName], losts_inform.firstChild.nodeValue)        
+
+    
+#### xml °ü·Ã ÇÔ¼ö ±¸Çö
+def LoadXMLFromFile():
+    global xmlFD, AccidentDoc
+    try:
+        xmlFD = urlopen("http://apis.data.go.kr/1262000/AccidentService/getAccidentList?serviceKey=BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D&numOfRows=999&pageSize=999&pageNo=1&startPage=1")
+    except IOError:
+        print("invalid file name or path")
+    else:
+        try:
+            dom = parse(xmlFD)
+        except Exception:
+            print("loading fail!!!")
+        else:
+            print("XML Document loading complete")
+            AccidentDoc = dom
+            return dom
+    return None        
+
 def QuitAccidentMgr():
     global loopFlag
     loopFlag = 0
-    AccidentFree()
-    
-##### ìž‘ë™ #####
+    Quit()
+
+def Quit():
+    if checkDocument():
+        AccidentDoc.unlink()
+        
+
+def checkDocument():
+    global AccidentDoc
+    if AccidentDoc == None:
+        print("Error : Document is empty")
+        return False
+    return True
+
 while(loopFlag > 0):
     printMenu()
-    menuKey = str(input('select menu : '))
+    menuKey = str(input('select menu: '))
     launcherFunction(menuKey)
 else:
     print("Thank you! Good Bye")
-
-        
-        
