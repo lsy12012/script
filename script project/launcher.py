@@ -6,7 +6,7 @@ from urllib.request import urlopen
 from internetAccident import *
 
 AccidentDoc = None
-informofLostsXMLDoc = None
+XMLDoc = None
 server = "apis.data.go.kr"
 regKey = 'BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D'
 
@@ -64,29 +64,27 @@ def SelectNation():
         
 def PrintNation(IsoCode):
     global regKey
-    global informofLostsXMLDoc
-    losts_inform_dic = \
+    global XMLDoc
+    nation_dic = \
     {
         "continent" : "대륙: ", "ename" : "nation: ", "id" : "id: ",
         "imgUrl" : "imgUrl1: ", "imgUrl2" : "imgUrl2: ", "name" : "국가: ",
         "news" : "소식: ", "wrtDt" : "작성 날짜: "
     }
     URL = "http://" + server + "/1262000/AccidentService/getAccidentList?serviceKey=" + regKey + "&isoCode1=" + IsoCode
-   # URL = "http://apis.data.go.kr/1262000/AccidentService/getAccidentList?serviceKey=BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D&numOfRows=999&pageSize=999&pageNo=1&startPage=1"
-   # print(IsoCode)
-   # print(URL)
+
     try:
         xmlFD = urlopen(URL)
     except IOError:
         print("loading fail!!!")
     else:
         try:
-            informofLostsXMLDoc = parse(xmlFD)
+            XMLDoc = parse(xmlFD)
         except Exception:
             print("Error: Document is empty")
         else:
             print("검색 조건에 해당하는 정보들을 출력합니다.")
-            response = informofLostsXMLDoc.childNodes
+            response = XMLDoc.childNodes
             rsp_child = response[0].childNodes
             for item in rsp_child:
                 if item.nodeName == "body":
@@ -95,9 +93,9 @@ def PrintNation(IsoCode):
                     items_list = items.childNodes
                     for i, item in enumerate(items_list):
                         item_list = item.childNodes
-                        for losts_inform in item_list:
-                            if losts_inform.nodeName != "rnum":
-                                print(losts_inform_dic[losts_inform.nodeName], losts_inform.firstChild.nodeValue)        
+                        for nation in item_list:
+                            if nation.nodeName != "rnum":
+                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
 
     
 #### xml 관련 함수 구현
