@@ -44,17 +44,17 @@ def SelectNation():
     if not checkDocument():
         return None
     
-    response = AccidentDoc.childNodes
-    rsp_child = response[0].childNodes
+ #   response = AccidentDoc.childNodes
+ #   rsp_child = response[0].childNodes
     
-    for item in rsp_child:
-        if item.nodeName == "body":
-            body_list = item.childNodes
-            items = body_list[0]
-            items_list = items.childNodes
-            for i, item in enumerate(items_list):
-                item_list = item.childNodes
-                print("{0}. {1}".format(i, item_list[1].firstChild.nodeValue))
+ #   for item in rsp_child:
+ #       if item.nodeName == "body":
+ #           body_list = item.childNodes
+ #           items = body_list[0]
+ #           items_list = items.childNodes
+ #           for i, item in enumerate(items_list):
+ #               item_list = item.childNodes
+ #               print("{0}. {1}".format(i, item_list[1].firstChild.nodeValue))
                 
    
     IsoCode = str(input("ISO 국가코드를 입력하시오: "))
@@ -83,7 +83,6 @@ def PrintNation(IsoCode):
         except Exception:
             print("Error: Document is empty")
         else:
-            print("검색 조건에 해당하는 정보들을 출력합니다.")
             response = XMLDoc.childNodes
             rsp_child = response[0].childNodes
             for item in rsp_child:

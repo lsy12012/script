@@ -1,0 +1,15 @@
+가나:GHA 가봉:GAB 가이아나:GUY 감비아:GMB 건지 섬:GGY 과들루프:GLP 과테말라:GTM 괌:GUM 그레나다:GRD 그리스:GRC 그린란드:GRL 기니:GIN 기니비사우:GNB 
+나미비아:NAM 나우루:NRU 나이지리아:NGA 남극:ATA 남수단:SSD 남아프리카 공화국:ZAF 네덜란드:NLD 네덜란드령 안틸레스:ANT 네팔:NPL 노르웨이:NOR 노퍽 섬:NFK 누벨칼레도니:NCL 뉴질랜드:NZL 니우에:NIU 니제르:NER 니카라과:NIC 
+대한민국:KOR 덴마크:DNK 도미니카 연방:DMA 도미니카 공화국:DOM 독일:DEU 동티모르:TLS 
+라오스:LAO 라이베리아:LBR 라트비아:LVA 러시아:RUS 레바논:LBN 레소토:LSO 레위니옹:REU 루마니아:ROU 룩셈부르크:LUX 르완다:RWA 리비아:LBY 리투아니아:LTU 리히텐슈타인:LIE 
+마다가스카르:MDG 마르티니크:MTQ 마셜 제도:MHL 마요트:MYT 마카오:MAC 마케도니아 공화국:MKD 말라위:MWI 말레이시아:MYS 말리:MLI 맨 섬:IMN 멕시코:MEX 모나코:MCO 모로코:MAR 모리셔스:MUS 모리타니:MRT 모잠비크:MOZ 몬테네그로:MNE 몬트세랫:MSR 몰도바:MDA 몰디브:MDV 몰타:MLT 몽골:MNG 미국:USA 미국령 군소 제도:UMI 미국령 버진아일랜드:VIR 미얀마:MMR 미크로네시아 연방:FSM 
+바누아투:VUT 바레인:BHR 바베이도스:BRB 바티칸 시국:VAT 바하마:BHS 방글라데시:BGD 버뮤다:BMU 베냉:BEN 베네수엘라:VEN 베트남:VNM 벨기에:BEL 벨라루스:BLR 벨리즈:BLZ 보스니아 헤르체고비나:BIH 보츠와나:BWA 볼리비아:BOL 부룬디:BDI 부르키나파소:BFA 부베 섬:BVT 부탄:BTN 북마리아나 제도:MNP 불가리아:BGR 브라질:BRA 브루나이:BRN 
+사모아:WSM 사우디아라비아:SAU 사우스조지아 사우스샌드위치 제도:SGS 산마리노:SMR 상투메 프린시페:STP 생피에르 미클롱:SPM 서사하라:ESH 세네갈:SEN 세르비아:SRB 세이셸:SYC 세인트루시아:LCA 세인트빈센트 그레나딘:VCT 세인트키츠 네비스:KNA 세인트헬레나:SHN 소말리아:SOM 솔로몬 제도:SLB 수단:SDN 수리남:SUR 스리랑카:LKA 스발바르 얀마옌:SJM 스와질란드:SWZ 스웨덴:SWE 스위스:CHE 스페인:ESP 슬로바키아:SVK 슬로베니아:SVN 시리아:SYR 시에라리온:SLE 싱가포르:SGP 
+아랍에미리트:ARE 아루바:ABW 아르메니아:ARM 아르헨티나:ARG 아메리칸사모아:ASM 아이슬란드:ISL 아이티:HTI 아일랜드:IRL 아제르바이잔:AZE 아프가니스탄:AFG 안도라:AND 알바니아:ALB 알제리:DZA 앙골라:AGO 앤티가 바부다:ATG 앵귈라:AIA 에리트레아:ERI 에스토니아:EST 에콰도르:ECU 에티오피아:ETH 엘살바도르:SLV 영국:GBR 영국령 버진아일랜드:VGB 영국령 인도양 지역:IOT 예멘:YEM 오만:OMN 오스트레일리아:AUS 오스트리아:AUT 온두라스:HND 올란드 제도:ALA 요르단:JOR 우간다:UGA 우루과이:URY 우즈베키스탄:UZB 우크라이나:UKR 왈리스 퓌튀나:WLF 이라크:IRQ 이란:IRN 이스라엘:ISR 이집트:EGY 이탈리아:ITA 인도네시아:IDN 인도:IND 일본:JPN 
+자메이카:JAM 잠비아:ZMB 저지 섬:JEY 적도 기니:GNQ 조선민주주의인민공화국:PRK 조지아:GEO 중앙아프리카 공화국:CAF 중화민국:TWN 중화인민공화국:CHN 지부티:DJI 지브롤터:GIB 짐바브웨:ZWE 
+차드:TCD 체코:CZE 칠레:CHL 
+카메룬:CMR 카보베르데:CPV 카자흐스탄:KAZ 카타르:QAT 캄보디아:KHM 캐나다:CAN 케냐:KEN 케이맨 제도:CYM 코모로:COM 코스타리카:CRI 코코스 제도:CCK 코트디부아르:CIV 콜롬비아:COL 콩고 공화국:COG 콩고 민주 공화국:COD 쿠바:CUB 쿠웨이트:KWT 쿡 제도:COK 크로아티아:HRV 크리스마스 섬:CXR 키르기스스탄:KGZ 키리바시:KIR 키프로스:CYP 
+타이:THA 타지키스탄:TJK 탄자니아:TZA 터크스 케이커스 제도:TCA 터키:TUR 토고:TGO 토켈라우:TKL 통가:TON 투르크메니스탄:TKM 투발루:TUV 튀니지:TUN 트리니다드 토바고:TTO 
+파나마:PAN 파라과이:PRY 파키스탄:PAK 파푸아 뉴기니:PNG 팔라우:PLW 팔레스타인:PSE 페로 제도:FRO 페루:PER 포르투갈:PRT 포클랜드 제도:FLK 폴란드:POL 푸에르토리코:PRI 프랑스:FRA 프랑스령 기아나:GUF 남극 프랑스령 남방 및 남극:ATF 프랑스령 폴리네시아:PYF 피지:FJI 핀란드:FIN 필리핀:PHL 핏케언 제도:PCN 제도 허드 맥도널드 제도:HMD 
+헝가리:HUN 홍콩:HKG
+ 
