@@ -14,17 +14,16 @@ def printMenu():
     print("\n Welcome!")
     print("===Menu===")
     print("Load XML: l")
-    print("대륙별 검색: c")
     print("나라별 검색: n")
     print("Quit program: q")
     
 
+
+
+
 def launcherFunction(menu):
     if menu == 'l':
         LoadXMLFromFile()
-    elif menu == 'c':
-        keyword = str(input('input keyword to search: '))
-        printAccident(SearchAccidentContinent(keyword))
     elif menu == 'n':
         if AccidentDoc == None:
             print("Error : Document is empty")
@@ -39,6 +38,11 @@ def launcherFunction(menu):
     else:
         print("error : unknown menu key")
       
+      
+      
+      
+      
+      
 def SelectNation():
     global AccidentDoc
     if not checkDocument():
@@ -46,7 +50,7 @@ def SelectNation():
     
     f = open("C:/script/script project/ISO 국가코드.txt", "r")
     print(f.read())
-#    f.close()            
+    f.close()            
     IsoCode = str(input("ISO 국가코드를 입력하시오: "))
     print(IsoCode, "를 선택")
     return IsoCode
