@@ -3,18 +3,26 @@ loopFlag = 1
 from xml.dom.minidom import parse, parseString
 from xml.etree import ElementTree
 from urllib.request import urlopen
+from email.mime.text import MIMEText
 from internetAccident import *
+
+import smtplib
+#import mysmtplib
+#import Accident
 
 AccidentDoc = None
 XMLDoc = None
 server = "apis.data.go.kr"
 regKey = 'BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D'
 
+mailer = None
+
 def printMenu():
     print("\n Welcome!")
     print("===Menu===")
     print("Load XML: l")
     print("나라별 검색: n")
+    print("이메일 전송: s")
     print("Quit program: q")
     
 
@@ -32,15 +40,14 @@ def launcherFunction(menu):
             IsoCode = SelectNation()
             PrintNation(IsoCode)
                  
+    elif menu == 's':
+        SendEmail()        
+        
     elif menu == 'q':
         QuitAccidentMgr()
         
     else:
         print("error : unknown menu key")
-      
-      
-      
-      
       
       
 def SelectNation():
@@ -53,17 +60,30 @@ def SelectNation():
     f.close()            
     IsoCode = str(input("ISO 국가코드를 입력하시오: "))
     print(IsoCode, "를 선택")
+    print("*************************")
     return IsoCode
 
         
 def PrintNation(IsoCode):
     global regKey
     global XMLDoc
+#    nation_dic = \
+#    {
+#        "continent" : "대륙: ", "ename" : "nation: ", "id" : "id: ",
+#        "imgUrl" : "imgUrl1: ", "imgUrl2" : "imgUrl2: ", "name" : "국가: ",
+#        "news" : "소식: ", "wrtDt" : "작성 날짜: "
+#    }
+
     nation_dic = \
     {
-        "continent" : "대륙: ", "ename" : "nation: ", "id" : "id: ",
-        "imgUrl" : "imgUrl1: ", "imgUrl2" : "imgUrl2: ", "name" : "국가: ",
-        "news" : "소식: ", "wrtDt" : "작성 날짜: "
+        "continent" : "대륙: ", 
+        "ename" : "nation: ",
+        "id" : "id: ",
+        "imgUrl" : "imgUrl1: ", 
+        "imgUrl2" : "imgUrl2: ",
+        "name" : "국가: ",
+        "news" : "소식: ", 
+        "wrtDt" : "작성 날짜: "
     }
     URL = "http://" + server + "/1262000/AccidentService/getAccidentList?serviceKey=" + regKey + "&isoCode1=" + IsoCode
 
@@ -82,14 +102,17 @@ def PrintNation(IsoCode):
             for item in rsp_child:
                 if item.nodeName == "body":
                     body_list = item.childNodes
-                    items = body_list[0]
-                    items_list = items.childNodes
+                    items_list = body_list[0].childNodes
                     for i, item in enumerate(items_list):
                         item_list = item.childNodes
                         for nation in item_list:
-                            if nation.nodeName != "rnum":
+                            #if nation.nodeName != "rnum":
+                            if nation.nodeName != "id":
                                 print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
-
+#                            if nation.nodeName != "imgUrl":
+#                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
+#                            if nation.nodeName != "imgUrl2":
+#                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
     
 #### xml 관련 함수 구현
 def LoadXMLFromFile():
@@ -125,6 +148,37 @@ def checkDocument():
         print("Error : Document is empty")
         return False
     return True
+
+## 이메일
+def SettingMailer():
+    global mailer
+    mailer = smtplib.SMTP("smtp.gmail.com", 587)
+    mailer.ehlo()
+    mailer.starttls()
+    mailer.ehlo()
+    mailer.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
+
+def SendMailTest(mailaddress):
+    text = "Hello world!"
+    msg = MIMEText(text)
+    senderAddr = "lsy1201212@gmail.com"
+    recipientAddr = mailaddress
+    
+    msg['subject'] = "제목: 테스트"
+    msg['From'] = senderAddr
+    msg['To'] = recipientAddr
+    
+    global mailer
+    mailer.sendmail(senderAddr, [recipientAddr], msg.as_string())
+    mailer.close()
+    print("메일 전송에 성공.")
+    
+def SendEmail():
+    SettingMailer()
+    mailaddress = input("이메일 주소를 입력하세요: ")
+    SendMailTest(mailaddress)
+
+
 
 while(loopFlag > 0):
     printMenu()
