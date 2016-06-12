@@ -16,11 +16,11 @@ host = "smtp.gmail.com" # Gmail STMP 서버 주소.
 port = "587"
 htmlFileName = "logo.html"
 
-#senderAddr = "lsy1201212@gmail.com"     # 보내는 사람 email 주소.
-#recipientAddr = "dltkddudz@naver.com"   # 받는 사람 email 주소.
+senderAddr = "lsy1201212@gmail.com"     # 보내는 사람 email 주소.
+recipientAddr = "dltkddudz@naver.com"   # 받는 사람 email 주소.
 
-senderAddr = "dltkddudz@naver.com"     # 보내는 사람 email 주소.
-recipientAddr = "lsy1201212@gmail.com"   # 받는 사람 email 주소.
+#senderAddr = "dltkddudz@naver.com"     # 보내는 사람 email 주소.
+#recipientAddr = "lsy1201212@gmail.com"   # 받는 사람 email 주소.
 
 msg = MIMEBase("multipart", "alternative")
 msg['Subject'] = "Test email in Python 3.0"
@@ -41,7 +41,8 @@ s = mysmtplib.MySMTP(host,port)
 s.ehlo()
 s.starttls()
 s.ehlo()
-s.login("dltkddudz@naver.com","sksms2gkrsus1qks")
+s.login("lsy1201212@gmail.com","sksms1gkrsus8qks")
+#s.login("dltkddudz@naver.com","sksms2gkrsus1qks")
 s.sendmail(senderAddr , [recipientAddr], msg.as_string())
 s.close()
 
