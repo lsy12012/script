@@ -15,7 +15,10 @@ XMLDoc = None
 server = "apis.data.go.kr"
 regKey = 'BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYejkHnkEPAil7eeESY6WQCcA%3D%3D'
 
-mailer = None
+host = "smtp.gmail.com" # Gmail SMTP 서버 주소
+port = "587"
+mail = None
+#mailer = None
 
 def printMenu():
     print("\n Welcome!")
@@ -25,9 +28,6 @@ def printMenu():
     print("이메일 전송: s")
     print("Quit program: q")
     
-
-
-
 
 def launcherFunction(menu):
     if menu == 'l':
@@ -106,13 +106,11 @@ def PrintNation(IsoCode):
                     for i, item in enumerate(items_list):
                         item_list = item.childNodes
                         for nation in item_list:
-                            #if nation.nodeName != "rnum":
-                            if nation.nodeName != "id":
-                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
-#                            if nation.nodeName != "imgUrl":
-#                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
-#                            if nation.nodeName != "imgUrl2":
-#                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)        
+                             if nation.nodeName != "imgUrl":
+                                print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)                            
+                                    
+                else:
+                    print("해당 국가에 대한 정보가 없습니다.")
     
 #### xml 관련 함수 구현
 def LoadXMLFromFile():
@@ -150,15 +148,16 @@ def checkDocument():
     return True
 
 ## 이메일
-def SettingMailer():
-    global mailer
-    mailer = smtplib.SMTP("smtp.gmail.com", 587)
-    mailer.ehlo()
-    mailer.starttls()
-    mailer.ehlo()
-    mailer.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
+def LoginEmail():
+    global mail
+    mail = smtplib.SMTP(host, port)
+    mail.ehlo()
+    mail.starttls()
+    mail.ehlo()
+    mail.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
 
-def SendMailTest(mailaddress):
+
+def SendMail(mailaddress):
     text = "Hello world!"
     msg = MIMEText(text)
     senderAddr = "lsy1201212@gmail.com"
@@ -168,15 +167,16 @@ def SendMailTest(mailaddress):
     msg['From'] = senderAddr
     msg['To'] = recipientAddr
     
-    global mailer
-    mailer.sendmail(senderAddr, [recipientAddr], msg.as_string())
-    mailer.close()
+    global mail
+    mail.sendmail(senderAddr, [recipientAddr], msg.as_string())
+    mail.close()
     print("메일 전송에 성공.")
     
 def SendEmail():
-    SettingMailer()
-    mailaddress = input("이메일 주소를 입력하세요: ")
-    SendMailTest(mailaddress)
+    LoginEmail()
+    mailaddress = input("수신자의 이메일 주소를 입력하세요: ")
+    print("메일 전송 중...")
+    SendMail(mailaddress)
 
 
 
