@@ -4,7 +4,8 @@ from xml.dom.minidom import parse, parseString
 from xml.etree import ElementTree
 from urllib.request import urlopen
 from email.mime.text import MIMEText
-from internetAccident import *
+
+
 
 import smtplib
 #import mysmtplib
@@ -17,7 +18,7 @@ regKey = 'BrS5flwzIznCPz8iKRmQUWehNDm%2FGI9dCqieoD%2B6qH%2BKT77TYm8vVQ0me49Y1LYe
 
 host = "smtp.gmail.com" # Gmail SMTP 서버 주소
 port = "587"
-mail = None
+s = None
 #mailer = None
 
 def printMenu():
@@ -67,20 +68,11 @@ def SelectNation():
 def PrintNation(IsoCode):
     global regKey
     global XMLDoc
-#    nation_dic = \
-#    {
-#        "continent" : "대륙: ", "ename" : "nation: ", "id" : "id: ",
-#        "imgUrl" : "imgUrl1: ", "imgUrl2" : "imgUrl2: ", "name" : "국가: ",
-#        "news" : "소식: ", "wrtDt" : "작성 날짜: "
-#    }
 
     nation_dic = \
     {
         "continent" : "대륙: ", 
         "ename" : "nation: ",
-        "id" : "id: ",
-        "imgUrl" : "imgUrl1: ", 
-        "imgUrl2" : "imgUrl2: ",
         "name" : "국가: ",
         "news" : "소식: ", 
         "wrtDt" : "작성 날짜: "
@@ -97,6 +89,7 @@ def PrintNation(IsoCode):
         except Exception:
             print("Error: Document is empty")
         else:
+            AccidentList=[]
             response = XMLDoc.childNodes
             rsp_child = response[0].childNodes
             for item in rsp_child:
@@ -106,8 +99,9 @@ def PrintNation(IsoCode):
                     for i, item in enumerate(items_list):
                         item_list = item.childNodes
                         for nation in item_list:
-                             if nation.nodeName != "imgUrl":
+                             if nation.nodeName != "id" and nation.nodeName != "imgUrl" and nation.nodeName != "imgUrl2":
                                 print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)                            
+                                AccidentList.append((nation_dic[nation.nodeName], nation.firstChild.nodeValue))
                                     
                 else:
                     print("해당 국가에 대한 정보가 없습니다.")
@@ -149,33 +143,34 @@ def checkDocument():
 
 ## 이메일
 def LoginEmail():
-    global mail
-    mail = smtplib.SMTP(host, port)
-    mail.ehlo()
-    mail.starttls()
-    mail.ehlo()
-    mail.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
+    global s
+    s = smtplib.SMTP(host, port)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
 
 
 def SendMail(mailaddress):
-    text = "Hello world!"
+    title = str(input("메일 제목을 입력: "))
+    text = str(input("원하시는 메시지를 입력하세요: "))
+    print("메일 전송 중...")
     msg = MIMEText(text)
     senderAddr = "lsy1201212@gmail.com"
     recipientAddr = mailaddress
     
-    msg['subject'] = "제목: 테스트"
+    msg['subject'] = title
     msg['From'] = senderAddr
     msg['To'] = recipientAddr
     
-    global mail
-    mail.sendmail(senderAddr, [recipientAddr], msg.as_string())
-    mail.close()
+    global s
+    s.sendmail(senderAddr, [recipientAddr], msg.as_string())
+    s.close()
     print("메일 전송에 성공.")
     
 def SendEmail():
     LoginEmail()
     mailaddress = input("수신자의 이메일 주소를 입력하세요: ")
-    print("메일 전송 중...")
     SendMail(mailaddress)
 
 
