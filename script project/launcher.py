@@ -98,14 +98,17 @@ def PrintNation(IsoCode):
                              if nation.nodeName != "id" and nation.nodeName != "imgUrl" and nation.nodeName != "imgUrl2":
                                 print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)                            
                                 AccidentList.append((nation_dic[nation.nodeName], nation.firstChild.nodeValue))
-                        
+                                                                
+                                
                         while 1:
                             print("이 결과를 이메일로 전송하시겠습니까? (Y/N)")
                             key = input(" ")
                             if(key == 'Y'):
+                               # print(AccidentList)
                                 SendEmail(AccidentList)
                                 return None
                             elif(key == 'N'):
+                                print(AccidentList)
                                 return None
                             else:
                                 print("잘못된 입력입니다.")
@@ -156,28 +159,35 @@ def SendEmail(AccList):
     s.starttls()
     s.ehlo()
     s.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
+   # print(AccList)
+    Acc = str(AccList)
     mailaddress = input("수신자의 이메일 주소를 입력하세요: ")
-    Send(AccList, mailaddress)
+   # Send(AccList, mailaddress)
+    Send(Acc, mailaddress)
 
 
 def Send(AccList, mailaddress):
     title = str(input("메일 제목을 입력: "))
-    #text = str(input("원하시는 메시지를 입력하세요: "))
     text = AccList
     print("메일 전송 중...")
     msg = MIMEText(text)
     senderAddr = "lsy1201212@gmail.com"
     recipientAddr = mailaddress
     
+    
+       
     msg['subject'] = title
     msg['From'] = senderAddr
     msg['To'] = recipientAddr
+    
     
     global s
     s.sendmail(senderAddr, [recipientAddr], msg.as_string())
     s.close()
     print("메일 전송에 성공.")
-    
+ 
+
+
 
 
 while(loopFlag > 0):
