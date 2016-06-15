@@ -26,7 +26,6 @@ def printMenu():
     print("===Menu===")
     print("Load XML: l")
     print("나라별 검색: n")
-    print("이메일 전송: s")
     print("Quit program: q")
     
 
@@ -40,9 +39,6 @@ def launcherFunction(menu):
         else:
             IsoCode = SelectNation()
             PrintNation(IsoCode)
-                 
-    elif menu == 's':
-        SendEmail()        
         
     elif menu == 'q':
         QuitAccidentMgr()
@@ -102,7 +98,18 @@ def PrintNation(IsoCode):
                              if nation.nodeName != "id" and nation.nodeName != "imgUrl" and nation.nodeName != "imgUrl2":
                                 print(nation_dic[nation.nodeName], nation.firstChild.nodeValue)                            
                                 AccidentList.append((nation_dic[nation.nodeName], nation.firstChild.nodeValue))
-                                    
+                        
+                        while 1:
+                            print("이 결과를 이메일로 전송하시겠습니까? (Y/N)")
+                            key = input(" ")
+                            if(key == 'Y'):
+                                SendEmail(AccidentList)
+                                return None
+                            elif(key == 'N'):
+                                return None
+                            else:
+                                print("잘못된 입력입니다.")
+                                                        
                 else:
                     print("해당 국가에 대한 정보가 없습니다.")
     
@@ -142,18 +149,21 @@ def checkDocument():
     return True
 
 ## 이메일
-def LoginEmail():
+def SendEmail(AccList):
     global s
     s = smtplib.SMTP(host, port)
     s.ehlo()
     s.starttls()
     s.ehlo()
     s.login("lsy1201212@gmail.com", "sksms1gkrsus8qks")
+    mailaddress = input("수신자의 이메일 주소를 입력하세요: ")
+    Send(AccList, mailaddress)
 
 
-def SendMail(mailaddress):
+def Send(AccList, mailaddress):
     title = str(input("메일 제목을 입력: "))
-    text = str(input("원하시는 메시지를 입력하세요: "))
+    #text = str(input("원하시는 메시지를 입력하세요: "))
+    text = AccList
     print("메일 전송 중...")
     msg = MIMEText(text)
     senderAddr = "lsy1201212@gmail.com"
@@ -168,11 +178,6 @@ def SendMail(mailaddress):
     s.close()
     print("메일 전송에 성공.")
     
-def SendEmail():
-    LoginEmail()
-    mailaddress = input("수신자의 이메일 주소를 입력하세요: ")
-    SendMail(mailaddress)
-
 
 
 while(loopFlag > 0):
