@@ -4,7 +4,7 @@ from xml.dom.minidom import parse, parseString
 from xml.etree import ElementTree
 from urllib.request import urlopen
 from email.mime.text import MIMEText
-import setup
+#import setup
 
 
 import smtplib
